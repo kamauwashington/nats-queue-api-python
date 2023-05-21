@@ -63,7 +63,7 @@ This repository uses dotenv, feel free to create a .env file to set the ALPHA_VA
     * Messages similar to the following should display :
         > Starting subscriber 'wine-rooster'. Connection to NATS Server 'localhost' established by 'wine-rooster'. where 'wine-rooster' is the generated name given to the open subscription 
 1) open Postman or a browser and execute a GET request to : 
-    * **http://localhost:8000** or **http://<SERVER>:<PORT>** as defined in .env
+    * **http://localhost:8000** or **http://< SERVER >:< PORT >** as defined in .env
     * the response should look like :
         > *Message 19 recieved by 'wine-rooster'.* where 'wine-rooster' is the generated name given to the open subscription
     
