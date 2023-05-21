@@ -1,0 +1,4 @@
+nats-py==2.2.0
+python-dotenv==1.0.0
+sanic==23.3
+coolname==2.2.0
