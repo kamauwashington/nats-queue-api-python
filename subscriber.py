@@ -16,7 +16,7 @@ subscriptionName : str = generate_slug(2)
 
 ###################### DELAYED MESSAGE FUNCTIONALITY ######################
 
-# this method executes and async delta for the duration defined in the environment variable : DURATION
+# this method executes an async delay for the duration defined in the environment variable : DURATION
 async def delayedResponse(msg : NATS.msg_class) -> None :
     global subscriptionName
 

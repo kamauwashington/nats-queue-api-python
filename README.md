@@ -1,4 +1,4 @@
-# Nats.io Queue Group as Sanic REST API in Python+
+# Nats.io Queue Group as Sanic REST API in Python3+
 
 > This repository is purely for reference and is illustrative in it is purpose. Please do not use in production as is, use this as a guide
 or starting point for a production level implementation.
