@@ -28,11 +28,11 @@ Before you continue, ensure you have met the following requirements:
 * Python3+
 * Pip3 23+
 * **OPTIONAL**
-    * [Artillery](https://www.npmjs.com/package/artillery) can be used to run load tests (install globally)
+    * **[Artillery](https://www.npmjs.com/package/artillery)** can be used to run load tests (install globally)
         * **NOTE** If there is another preference for load testing, Artillery will not be needed
         * NodeJS v18 or higher installed
         * Npm installed
-    * **Make**
+    * **[Make](https://www.gnu.org/software/make/)**
         * **NOTE** The commands in make are described below
         * On windows [Use Chocolatey](https://community.chocolatey.org/packages/make)
         * Make should be avaiable on OSX and Linux, do note that developer tools on Mac may be needed if there was a recent OSX version installed.
