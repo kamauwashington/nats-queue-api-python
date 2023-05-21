@@ -11,7 +11,7 @@ app : Sanic = Sanic("NatsQueueAPI")
 app.config.REQUEST_TIMEOUT = 10
 
 
-
+###################### ON BEFORE APPLICATION START ######################
 
 # this method will run before the application is started, to initialize context data
 @app.before_server_start
@@ -32,8 +32,7 @@ async def onBeforeStart(app : Sanic, _) -> None :
     app.ctx.messageCount : int = 0
 
 
-
-
+###################### API "/" ROOT ENDPOINT (GET) ######################
 
 # basic root endpoint http://<SERVER>:<PORT> (defaults to http://localhost:8000)
 @app.get("/")
@@ -54,15 +53,14 @@ async def root_request(request : Request):
         # there should not be timeouts unless a large duration is set
         print("Timed out waiting for response")
         return text("Request timed out sending message %1s." % (app.ctx.messageCount))
-    
 
 
-
+###################### ON BEFORE APPLICATION CLOSE ######################
 
 # this method will run before the application is stopped, in which the connection to NATS can be closed to prevent orphan connections
 @app.before_server_stop
 async def onBeforeStop(app, _) -> None :
-    
+
     # the NATS connection when attempting to close should use the 'await' keyword to operate properly
     await app.ctx.nc.close()
     print("\nConnection to NATS Server '%1s' closed." %  (settings.SERVER))

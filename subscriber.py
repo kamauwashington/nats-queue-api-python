@@ -66,6 +66,7 @@ async def main () -> None :
     while not closeConnection :
         await asyncio.sleep(1)
     
+    
     ###################### CLEANUP and EXIT ######################
     
     # unsubscribe from the above NATS subscription
