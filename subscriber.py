@@ -24,7 +24,7 @@ async def delayedResponse(msg : NATS.msg_class) -> None :
     await asyncio.sleep(settings.DURATION)
 
     messageCount : str = msg.data.decode()
-    replyMessage : str = "Message %1s recieved by '%2s.'" % (messageCount,subscriptionName)
+    replyMessage : str = "Message %1s recieved by '%2s'." % (messageCount,subscriptionName)
     print(replyMessage)
 
     # using the Request-Reply pattern msg.respond publishes a message to the reply-to (message must be in bytes)
