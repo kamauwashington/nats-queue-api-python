@@ -34,7 +34,7 @@ async def onBeforeStart(app : Sanic, _) -> None :
 
 ###################### API "/" ROOT ENDPOINT (GET) ######################
 
-# basic root endpoint http://<SERVER>:<PORT> (defaults to http://localhost:8000)
+# basic root endpoint http://<HOST>:<HOST_PORT> (defaults to http://localhost:8000)
 @app.get("/")
 async def root_request(request : Request):
     try:
@@ -64,3 +64,12 @@ async def onBeforeStop(app, _) -> None :
     # the NATS connection when attempting to close should use the 'await' keyword to operate properly
     await app.ctx.nc.close()
     print("\nConnection to NATS Server '%1s' closed." %  (settings.SERVER))
+
+
+# default main function to start Sanic application
+def main() -> None :
+    app.run(host=settings.HOST, port=int(settings.HOST_PORT))
+
+
+if __name__ == '__main__':
+    main()

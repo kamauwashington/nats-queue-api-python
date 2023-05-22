@@ -32,11 +32,6 @@ Before you continue, ensure you have met the following requirements:
         * **NOTE** If there is another preference for load testing, Artillery will not be needed
         * NodeJS v18 or higher installed
         * Npm installed
-    * **[Make](https://www.gnu.org/software/make/)**
-        * **NOTE** The commands in make are described below
-        * On windows [Use Chocolatey](https://community.chocolatey.org/packages/make)
-        * Make should be avaiable on OSX and Linux, do note that developer tools on Mac may be needed if there was a recent OSX version installed.
-
 
 ## Environment Variables
 
@@ -55,22 +50,21 @@ This repository uses dotenv, feel free to create a .env file to set the ALPHA_VA
 1) **OPTIONAL** Create a file in the root named **.env**
     * Enter values for any of the above environment variables to be changed
 1) run **pip3 install -r requirements.txt** from the command line
-1) run **make api** from the command line
-    * alternatively if Make is not installed run **sanic api:app** from the command line
-1) open a **NEW** terminal to the root of this repository and run **make subscriber** 
-    * alternatively if Make is not installed run **python3 subscriber.py** from the command line
+1) run **python3 api.py** from the command line
+1) open a **NEW** terminal to the root of this repository and run **python3 subscriber.py** 
     * _allow the subscription a few additional seconds to bind, 503 errors may be experienced during this binding time_
     * Messages similar to the following should display :
         > Starting subscriber 'wine-rooster'. Connection to NATS Server 'localhost' established by 'wine-rooster'. where 'wine-rooster' is the generated name given to the open subscription 
 1) open Postman or a browser and execute a GET request to : 
-    * **http://localhost:8000** or **http://localhost:< PORT >** as defined in .env
+    * **http://localhost:8000** or **http://< HOST > :< HOST_PORT >** as defined in .env
     * the response should look like :
         > *Message 19 recieved by 'wine-rooster'.* where 'wine-rooster' is the generated name given to the open subscription
     
 1) Repeat steps 5 and 6 opening a **NEW** terminal for the subscription  (issued at the root of this repository)
     > It can be observed that there will be responses from other subscriptions as such : *Message 9 recieved by 'macho-baboon'.* where 'macho-baboon' is the generated name given to the open subscription
 1) As these processes are started (remember to run each in its own terminal/console), it can be observed that subscribers are randomply selected from the Queue Group for message processing, effectively load balancing the subject requests.
-1) **OPTIONAL** run *make load-test* to load test with Artillery. This is a surefire way to observe the performance improvement and load balancing capability
+1) **OPTIONAL** run load tests with Artillery. This is a surefire way to observe the performance improvement and load balancing capability
+    * open a new terminal to the project root and run **artillery quick --count 20 -n 20 http://127.0.0.1:8000/ --output report.json && artillery report report.json**
 
 ## What am I Seeing?
 
