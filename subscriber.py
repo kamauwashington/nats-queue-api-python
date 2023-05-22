@@ -33,7 +33,7 @@ async def delayedResponse(msg : NATS.msg_class) -> None :
 
 ###################### SUBSCRIBER ######################
 
-# this is the main subscriber, note that it is asyncchronous as there are multiple awaits within needed by NATS
+# this is the main subscriber, note that it is asynchronous as there are multiple awaits within needed by NATS
 async def main () -> None : 
     # identify subscriber
     global subscriptionName
@@ -66,7 +66,7 @@ async def main () -> None :
     while not closeConnection :
         await asyncio.sleep(1)
     
-    
+
     ###################### CLEANUP and EXIT ######################
     
     # unsubscribe from the above NATS subscription
