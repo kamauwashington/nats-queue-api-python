@@ -37,8 +37,8 @@ Before you continue, ensure you have met the following requirements:
 
 This repository uses dotenv, feel free to create a .env file to set the ALPHA_VANTAGE_KEY, or override other aspects of the program.
 
-
-* PORT : The port the Sanic server should run on (defaults to **8000**)
+* HOST : The host of the Sanic server (defaults to **localhost**)
+* HOST_PORT : The port the Sanic server should run on (defaults to **8000**)
 * SUBJECT : The Nats subject the Request/Reply will be issued on (defaults to **stock.request**)
 * NATS_SERVER : The Nats server that will be facilitating Pub-Sub (defaults to  **localhost**)
 * DURATION : The time in seconds the subscriber should run for before returning a result (defaults to **100ms** or **.100**) 
