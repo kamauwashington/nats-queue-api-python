@@ -7,20 +7,18 @@ from nats.aio.client import Client as NATS
 from subscriberState import SubscriberState
 
 # subscriber state manages information and actions pertinent to the executing process
-sunsbcriberState = SubscriberState()
+subscriberState = SubscriberState()
 
 
 ###################### DELAYED MESSAGE FUNCTIONALITY ######################
 
 # this method executes an async delay for the duration defined in the environment variable : DURATION
 async def delayedResponse(msg : NATS.msg_class) -> None :
-    global subscriptionName
-
     # important to use await here, this is a non blocking sleep 
     await asyncio.sleep(settings.DURATION)
 
     messageCount : str = msg.data.decode()
-    replyMessage : str = "Message %1s recieved by '%2s'." % (messageCount,subscriptionName)
+    replyMessage : str = "Message %1s recieved by '%2s'." % (messageCount,subscriberState.getSubsriberName())
     print(replyMessage)
 
     # using the Request-Reply pattern msg.respond publishes a message to the reply-to (message must be in bytes)
@@ -31,7 +29,7 @@ async def delayedResponse(msg : NATS.msg_class) -> None :
 
 # this is the main subscriber, note that it is asynchronous as there are multiple awaits within needed by NATS
 async def main () -> None : 
-    print("Starting subscriber '%1s'." % (sunsbcriberState.getSubsriberName()))
+    print("Starting subscriber '%1s'." % (subscriberState.getSubsriberName()))
 
     # provide access to the close connectionGlobal var for use in the keep alive loop
     #global closeConnection
@@ -41,7 +39,7 @@ async def main () -> None :
 
     # connect to the server defined in the environment variable : SERVER
     await nc.connect(servers=settings.SERVER)
-    print("Connection to NATS Server '%1s' established by '%2s.'" % (settings.SERVER,sunsbcriberState.getSubsriberName()))
+    print("Connection to NATS Server '%1s' established by '%2s.'" % (settings.SERVER,subscriberState.getSubsriberName()))
     
     # create the subscription to the subject defined in the environment variable : NATS_SUBJECT
     subscription = await nc.subscribe(
@@ -57,7 +55,7 @@ async def main () -> None :
    
     # while the global variable closeConnection is False, loop every one second to keep alive
     # this can be a larger amount if needed, it is set to 1 for quick exiting only
-    while sunsbcriberState.hasOpenConnection() :
+    while subscriberState.hasOpenConnection() :
         await asyncio.sleep(1)
     
 
@@ -65,7 +63,7 @@ async def main () -> None :
     
     # unsubscribe from the above NATS subscription
     await subscription.unsubscribe()
-    print("\nUnsubscribed '%2s' from '%1s.'" % (settings.NATS_SUBJECT,sunsbcriberState.getSubsriberName()))
+    print("\nUnsubscribed '%2s' from '%1s.'" % (settings.NATS_SUBJECT,subscriberState.getSubsriberName()))
 
     # close the NATS connection, there have been instances where a process was not properly closed w/ orphan connections
     await nc.close()
@@ -76,7 +74,7 @@ async def main () -> None :
 
 # set the global closed to True to break the above while loop, and continue to CLEANUP and EXIT
 def killProcess () -> None :
-    sunsbcriberState.closeConnection()
+    subscriberState.closeConnection()
 
 # attach the killProcess script to SIGINT
 signal.signal(signal.SIGINT, lambda sig,handler : killProcess() )
